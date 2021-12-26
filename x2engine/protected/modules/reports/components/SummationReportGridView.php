@@ -104,7 +104,8 @@ class SummationReportGridView extends ReportGridView {
      * Initializes hidden columns 
      */
     public function initColumns () {
-        if (count ($this->hiddenColumns)) {
+	//fix issue with count() per https://github.com/X2Engine/X2CRM/pull/186
+        if (is_array($this->hiddenColumns) && count ($this->hiddenColumns)) {
             $tmp = $this->columns;
             $this->columns = $this->hiddenColumns;
             parent::initColumns ();
