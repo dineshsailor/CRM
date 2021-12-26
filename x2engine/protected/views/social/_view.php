@@ -73,7 +73,10 @@
 
 	?> 
 	<br/>
-	<?php echo $data->text; ?>
+	<?php 
+//CVE-2021-27288
+echo CHtml::encode($data->text); 
+?>
 </div>
 
 
