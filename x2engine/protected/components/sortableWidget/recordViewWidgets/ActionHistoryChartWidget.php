@@ -318,16 +318,31 @@ class ActionHistoryChartWidget extends ChartWidget {
 				$associationId, $associationType, $showRelationships);
 		}
 
-		$command = Yii::app()->db->createCommand()
-            ->select('min(createDate)')
-            ->from('x2_actions')
-            ->where(
-                $associationCondition.' AND '.
-                '(visibility="1" OR assignedTo="'.Yii::app()->user->getName().'")', 
+        /*
+            see protected static function getAssociationCond  above, sometimes it returns parameterized string,
+            but if not parameterized string causes 500 error because of extra parameters. (maybe related to php8,
+            php7 may not have complained about extra parameters) the 500 error breaks contact/id/
+        */
+        if (strstr($associationCondition,'{')) {
+            $command = Yii::app()->db->createCommand()
+                ->select('min(createDate)')
+                ->from('x2_actions')
+                ->where(
+                    $associationCondition . ' AND ' .
+                    '(visibility="1" OR assignedTo="' . Yii::app()->user->getName() . '")',
                 array(
                     'associationId' => $associationId, 
                     'associationType' => $associationType
                 ));
+        } else {
+            $command = Yii::app()->db->createCommand()
+                ->select('min(createDate)')
+                ->from('x2_actions')
+                ->where(
+                    $associationCondition . ' AND ' .
+                    '(visibility="1" OR assignedTo="' . Yii::app()->user->getName() . '")'
+                );
+        }
 		$actionsStartDate = $command->queryScalar();
         return $actionsStartDate;
 	}

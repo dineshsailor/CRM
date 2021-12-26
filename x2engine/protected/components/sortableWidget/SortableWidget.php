@@ -935,7 +935,7 @@ abstract class SortableWidget extends X2Widget {
         Yii::app()->clientScript->registerPackages ($this->packages);
 
         /*
-        If it's an ajax request, script must be placed at the end for it to be exectuted upon
+        If it's an ajax request, script must be placed at the end for it to be executed upon
         ajax response. Otherwise, place script at POS_BEGIN to allow dependent script files to be
         inserted afterwards.
         */

@@ -391,6 +391,35 @@ class CDbConnection extends CApplicationComponent
 				$this->_pdo=$this->createPdoInstance();
 				$this->initConnection($this->_pdo);
 				$this->_active=true;
+
+                //X2CRM join/group queries won't work if ONLY_FULL_GROUP_BY is set (modern mysql/mariadb versions default) so we turn it off.
+                //this probably sucks to do every connection, probably better way or rewrite the queries ?
+                //if you are only running X2CRM on your server then you could safely turn off ONLY_FULL_GROUP_BY and comment this bit out.
+                $driver=$this->getDriverName();
+                if (strstr($driver,'mysql'))
+                {
+                    $command = $this->createCommand("SELECT @@sql_mode");
+                    $reader = $command->query();
+                    foreach ($reader as $row)
+                    {
+                        if (isset($row['@@sql_mode']))
+                        {
+                            $xx = explode(',',$row['@@sql_mode']);
+                            $newxx = array();
+                            foreach ($xx as $v)
+                            {
+                                if ($v!='ONLY_FULL_GROUP_BY')
+                                {
+                                    $newxx[]=$v;
+                                }
+                            }
+
+                            $newmode = join(',',$newxx);
+                            $command = $this->createCommand("SET @@sql_mode = '".$newmode."'");
+                            $command->execute();
+                        }
+                    }
+                }
 			}
 			catch(PDOException $e)
 			{

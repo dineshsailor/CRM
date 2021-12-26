@@ -90,7 +90,7 @@ class CDateFormatter extends CComponent
 
 		if(is_string($time))
 		{
-			if(ctype_digit($time) || ($time{0}=='-' && ctype_digit(substr($time, 1))))
+			if(ctype_digit($time) || ($time[0]=='-' && ctype_digit(substr($time, 1))))
 				$time=(int)$time;
 			else
 				$time=strtotime($time);
@@ -126,7 +126,7 @@ class CDateFormatter extends CComponent
 		if(isset($date) && isset($time))
 		{
 			$dateTimePattern=$this->_locale->getDateTimeFormat();
-			return strtr($dateTimePattern,array('{0}'=>$time,'{1}'=>$date));
+			return strtr($dateTimePattern,array('[0]'=>$time,'{1}'=>$date));
 		}
 		elseif(isset($date))
 			return $date;

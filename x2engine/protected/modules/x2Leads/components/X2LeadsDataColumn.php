@@ -43,7 +43,9 @@ class X2LeadsDataColumn extends X2DataColumn {
      * Allows for default boolean filter to be set. See {@link X2Leads::search}
      */
     public function renderFilterCellContent() {
-        if ($this->fieldModel['fieldName'] == 'converted') {
+        //fix 500 if fieldModel is not Array or does not have 'fieldName', check isset
+        //maybe should set the cell content? TODO
+        if (isset($this->fieldModel['fieldName']) && ($this->fieldModel['fieldName'] == 'converted')) {
             echo CHtml::activeDropdownList(
                     $this->grid->filter, $this->name,
                     array(
@@ -56,6 +58,7 @@ class X2LeadsDataColumn extends X2DataColumn {
                     )
             );
         } else {
+            //TODO: deprecated
             parent::renderFilterCellContent();
         }
     }

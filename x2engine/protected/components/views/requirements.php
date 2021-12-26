@@ -549,6 +549,7 @@ $requirements['environment']['updates_connection'] = 0;
 $requirements['environment']['outbound_connection'] = 0;
 
 // Full network diagnosis:
+/*
 if($tryAccess){
     // There exists one remote access method, so it's worth trying. 
     // 
@@ -591,7 +592,7 @@ if($tryAccess){
 if(!function_exists('dns_check_record') && !$requirements['environment']['outbound_connection']) {
     $reqMessages[1][] = installer_t('Note: the function "dns_check_record" is not available on this server, so network diagnostic messages may not be accurate.');
 }
-
+*/
 
 
 // The ability to create network sockets, essential for SMTP-based email delivery:

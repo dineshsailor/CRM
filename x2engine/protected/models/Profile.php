@@ -1291,7 +1291,11 @@ class Profile extends X2ActiveRecord {
     }
 
     public function getLastLogin () {
-        return $this->user['lastLogin'];
+        if (isset($this->user['lastLogin'])) {
+            return $this->user['lastLogin'];
+        } else {
+            return time();
+        }
     }
 
     /**

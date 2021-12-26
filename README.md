@@ -1,3 +1,15 @@
+
+
+# 7.1x #
+
+* not fully tested.
+* works with php8+. 
+* works with modern mysql/mariadb server ie, ONLY_FULL_GROUP_BY is set by default now, which breaks join/group by queries in X2CRM.
+* (see x2engine/framework/db/CDbConnection.php)
+* included yii was updated to run on php8, however $TODO = should upgrade yii with modern version. 
+* Twilio component needs to be upgraded (or removed, actually, considering the current state of SMS)
+
+
 NOTE: IF YOU ARE UPDATING FROM <7.0 YOU WILL NEED TO RE-ENTER YOUR THIRD-PARTY APP CREDENTIALS! 
 THIS IS DUE TO THE REMOVAL OF MCRYPT IN PHP 7.2. FOR MORE INFO, PLEASE CONTACT customersupport@x2engine.com
 

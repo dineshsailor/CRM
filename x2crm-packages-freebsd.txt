@@ -1,0 +1,14 @@
+pkg install php80-curl-8.0.13
+pkg install php80-mysqli
+pkg install php80-pdo_mysql
+pkg install php80-posix
+pkg install php80-openssl
+pkg install php80-zip
+pkg install php80-pecl-mcrypt
+pkg install php80-pecl-ssh2
+pkg install php80-iconv
+pkg install php80-ctype
+pkg install php80-mbstring
+pkg install php80-fileinfo
+pkg install php80-imap
+pkg install php80-session
