@@ -9,6 +9,8 @@
 * included yii was updated to run on php8, however $TODO = should upgrade yii with modern version. 
 * Twilio component needs to be upgraded (or removed, actually, considering the current state of SMS)
 
+No changes to the database are made, and no files were removed. So it should work to rsync this version over 7.1. Note that your db authenticaion is stored in x2engine/protected/config/X2Config.php, if you overwrite that file you will need to update the email, host, user, pass, dbname strings in that file. 
+
 
 NOTE: IF YOU ARE UPDATING FROM <7.0 YOU WILL NEED TO RE-ENTER YOUR THIRD-PARTY APP CREDENTIALS! 
 THIS IS DUE TO THE REMOVAL OF MCRYPT IN PHP 7.2. FOR MORE INFO, PLEASE CONTACT customersupport@x2engine.com
