@@ -11,7 +11,7 @@
 
 No changes to the database are made, and no files were removed. So it should work to rsync this version over 7.1. Note that your db authentication is stored in x2engine/protected/config/X2Config.php, if you overwrite that file you will need to update the email, host, user, pass, dbname strings in that file. 
 
-Also, if you rsync updates and don't want to do an 'install', delete the file 'install.php' if present. 
+Also, if you rsync updates and don't want to do an 'install', delete the file 'install.php' if present. And (re)set directory permissions so webserver has write permission.
 
 
 NOTE: IF YOU ARE UPDATING FROM <7.0 YOU WILL NEED TO RE-ENTER YOUR THIRD-PARTY APP CREDENTIALS! 
