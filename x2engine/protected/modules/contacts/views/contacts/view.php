@@ -36,8 +36,8 @@
 
 
 
-
-$jsVars = "modelId = '$model->id'; modelName = '$model->name'; modelEmail = '$model->email'";
+//CVE-2020-21088
+$jsVars = "modelId = '$model->id'; modelName = '".CHtml::encode($model->name)."'; modelEmail = '".CHtml::encode($model->email)."'";
 Yii::app()->clientScript->registerScript('jsVars', $jsVars);
 
 Yii::app()->clientScript->registerScriptFile(Yii::app()->getBaseUrl() . '/js/Relationships.js');
