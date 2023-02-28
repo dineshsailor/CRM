@@ -2,31 +2,31 @@
 /***********************************************************************************
  * X2Engine Open Source Edition is a customer relationship management program developed by
  * X2 Engine, Inc. Copyright (C) 2011-2019 X2 Engine Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY X2ENGINE, X2ENGINE DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact X2Engine, Inc. P.O. Box 610121, Redwood City,
  * California 94061, USA. or at email address contact@x2engine.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * X2 Engine" logo. If the display of the logo is not reasonably feasible for
@@ -875,7 +875,7 @@ if (!$complete || $silent) {
         foreach ($sendArgs as $urlKey) {
             $stats[$urlKey] = $config[$urlKey];
         }
-        $ch = curl_init('https://x2planet.com/installs/registry/activity?' . http_build_query($stats));
+        $ch = curl_init('https://crm-updater.livedemosite.com/api/installs/registry/activity?' . http_build_query($stats));
         curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $gif = curl_exec($ch);
@@ -927,7 +927,7 @@ if (!$silent && $complete):
                     Copyright &copy; <?php echo date('Y'); ?><a href="http://www.x2crm.com">X2Engine Inc.</a><br />
                     <?php echo installer_t('All Rights Reserved.'); ?>
                         <?php if (!$config['test_db']): ?>
-                        <img style="height:0;width:0" src="https://x2planet.com/installs/registry/activity?<?php echo http_build_query($stats); ?>">
+                        <img style="height:0;width:0" src="https://crm-updater.livedemosite.com/api/installs/registry/activity?<?php echo http_build_query($stats); ?>">
     <?php endif; ?>
                 </div>
             </div>
@@ -937,8 +937,8 @@ if (!$silent && $complete):
 endif;
 // Delete install files
 foreach (array(
-    __DIR__.DIRECTORY_SEPARATOR.'install.php', 
-    __DIR__.DIRECTORY_SEPARATOR.'installConfig.php', 
+    __DIR__.DIRECTORY_SEPARATOR.'install.php',
+    __DIR__.DIRECTORY_SEPARATOR.'installConfig.php',
     __DIR__.DIRECTORY_SEPARATOR.'initialize_pro.php') as $file){
     if (file_exists($file)){
         unlink($file);

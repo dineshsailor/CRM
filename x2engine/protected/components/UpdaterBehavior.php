@@ -3,31 +3,31 @@
 /***********************************************************************************
  * X2Engine Open Source Edition is a customer relationship management program developed by
  * X2 Engine, Inc. Copyright (C) 2011-2019 X2 Engine Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY X2ENGINE, X2ENGINE DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact X2Engine, Inc. P.O. Box 610121, Redwood City,
  * California 94061, USA. or at email address contact@x2engine.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * X2 Engine" logo. If the display of the logo is not reasonably feasible for
@@ -114,7 +114,7 @@ class UpdaterBehavior extends ResponseBehavior {
     const BAKFILE = 'update_backup.sql';
 
     /**
-     * Defines a file that (for extra security) prevents race conditions in the unlikely event that 
+     * Defines a file that (for extra security) prevents race conditions in the unlikely event that
      * multiple requests to the web updater to enact file/database changes are made.
      */
     const LOCKFILE = 'app_update.lock';
@@ -308,7 +308,7 @@ class UpdaterBehavior extends ResponseBehavior {
      * @var type
      */
     private $_packageApplies = false;
-    
+
     /**
      * If true, indicates that the update/upgrade package indeed exists on the
      * local filesystem.
@@ -341,7 +341,7 @@ class UpdaterBehavior extends ResponseBehavior {
 
     /**
      * Current working directory.
-     * @var string 
+     * @var string
      */
     private $_thisPath;
 
@@ -363,7 +363,7 @@ class UpdaterBehavior extends ResponseBehavior {
     private $_webRoot;
 
     private $_webUpdaterActions;
-    
+
     /**
      * List of files used by the behavior
      * @var array
@@ -402,7 +402,7 @@ class UpdaterBehavior extends ResponseBehavior {
     public function applyFiles($dir=null){
         $success = true;
         $copiedFiles = array();
-        
+
         if(!empty($dir)) // Recursively copy a folder relative to webroot
             $success = $this->copyFile($dir);
         else{ // Copy files individually from source according to the manifest
@@ -441,7 +441,7 @@ class UpdaterBehavior extends ResponseBehavior {
      * dependency, yet because the file already exists as of many versions
      * before, it wouldn't be automatically fetched, because the earlier version
      * of the updater wouldn't have known that it needed to be updated first.
-     * 
+     *
      * @return bool True or false; true indicates that action has been taken,
      *  whereas false indicates no action needs to be taken nor has been taken.
      */
@@ -457,7 +457,7 @@ class UpdaterBehavior extends ResponseBehavior {
 
         $version = $this->configVars['version'];
         $updaterVersion = $this->configVars['updaterVersion'];
-        
+
         $this->output(Yii::t('admin', 'Running backwards compatibility actions for this version.'));
 
         // This variable indicates that a second self-update should be performed:
@@ -513,7 +513,7 @@ class UpdaterBehavior extends ResponseBehavior {
      * run the check again.
      *
      * All "checkIf" functions must have the rest of their names named after a
-     * condition, i.e. "AllClear" to "checkIfAllClear", and have a corresponding 
+     * condition, i.e. "AllClear" to "checkIfAllClear", and have a corresponding
      * private property named accordingly (i.e. for "checkIfFoo" the property
      * must be named "_foo"). The correspoding property must have a default
      * value of false (boolean).
@@ -527,7 +527,7 @@ class UpdaterBehavior extends ResponseBehavior {
     /**
      * Checks whether it is possible to run system commands using PHP's
      * {@link proc_open()} function.
-     * 
+     *
      * @param type $throw
      * @return boolean
      */
@@ -547,7 +547,7 @@ class UpdaterBehavior extends ResponseBehavior {
      *
      * Said file (specifically, its content) is necessary for checking whether
      * files were downloaded and extracted properly.
-     * 
+     *
      * @param type $throw
      * @return boolean
      * @throws CException
@@ -562,7 +562,7 @@ class UpdaterBehavior extends ResponseBehavior {
                 return false;
         }
         $checksums = $this->checksumsContent;
-        
+
         if(empty($checksums)) {
             if($throw)
                 throw new CException(Yii::t('admin', 'Cannot verify package contents.').' '.Yii::t('admin', 'Checksum file is empty.'), self::ERR_CHECKSUM);
@@ -599,7 +599,7 @@ class UpdaterBehavior extends ResponseBehavior {
 
     /**
      * Checks if the manifest file is present and intact.
-     * 
+     *
      * @param type $throw If false, returns; if true, throws or returns based on
      *  the success of the check
      * @return bool|string If not throwing: it will be the string representing
@@ -627,7 +627,7 @@ class UpdaterBehavior extends ResponseBehavior {
         }
         return true;
     }
-    
+
     /**
      * Ensures that the package actually applies to the current version and
      * edition.
@@ -691,7 +691,7 @@ class UpdaterBehavior extends ResponseBehavior {
         return true;
     }
 
-    
+
     /**
      * Branding validity check.
      */
@@ -717,7 +717,7 @@ class UpdaterBehavior extends ResponseBehavior {
         }
         return $fileStatus;
     }
-    
+
 
 
     /**
@@ -770,12 +770,12 @@ class UpdaterBehavior extends ResponseBehavior {
     }
 
     /**
-     * Copies files out of a folder and into the live installation. 
-     * 
+     * Copies files out of a folder and into the live installation.
+     *
      * Wrapper for {@link FileUtil::ccopy} for updates that can operate
      * recursively without requiring a list of files.
      *
-     * @param string $path Path relative to the web root to be copied 
+     * @param string $path Path relative to the web root to be copied
      *  (this is the target, unless dir is null, in which case it's the source)
      * @param string $file The path to copy (assumed relative to the webroot)
      * @param string $dir The name of the backup directory; "." means top-level directory
@@ -961,7 +961,7 @@ class UpdaterBehavior extends ResponseBehavior {
             $this->output(Yii::t('admin','Enacting changes to the database...'));
             $this->enactDatabaseChanges($autoRestore);
         }catch(Exception $e){
-            // The operation cannot proceed and is technically finished 
+            // The operation cannot proceed and is technically finished
             // executing, so there's no use keeping the lock file around except
             // to frustrate and confuse the end user.
             FileUtil::removeLockfile($lockFile);
@@ -1031,7 +1031,7 @@ class UpdaterBehavior extends ResponseBehavior {
             return false;
         }
     }
-    
+
     /**
      * Runs a list of SQL commands.
      *
@@ -1109,7 +1109,7 @@ class UpdaterBehavior extends ResponseBehavior {
             'edition' => $edition,
         );
         return FileUtil::getContents (
-            $this->updateServer . '/installs/updates/finalizeUpdate?' . 
+            $this->updateServer . '/installs/updates/finalizeUpdate?' .
                 http_build_query ($params, '', '&'));
     }
 
@@ -1164,7 +1164,7 @@ class UpdaterBehavior extends ResponseBehavior {
         }
         return $this->_checksums;
     }
-    
+
     public function getChecksumsContent() {
         if(empty($this->_checksumsContent))
             $this->_checksumsContent = trim(file_get_contents($this->updateDir.DIRECTORY_SEPARATOR.'contents.md5'));
@@ -1186,7 +1186,7 @@ class UpdaterBehavior extends ResponseBehavior {
             ////////////////////////////////
             // Check system requirements: //
             ////////////////////////////////
-            
+
             $req = $this->requirements;
             $allClear = $allClear && $req['canInstall'];
 
@@ -1256,7 +1256,7 @@ class UpdaterBehavior extends ResponseBehavior {
                     }
                 }
             }
-            
+
             $conflictingFields = array();
             if(!empty($fieldsEntries)){
                 try{
@@ -1398,7 +1398,7 @@ class UpdaterBehavior extends ResponseBehavior {
                 $ret = proc_close($testProc);
                 $prog = 'mysql';
                 unset($pipes);
-                
+
                 if($ret !== 0){
                     $testProc = proc_open('mysql.exe --help', $descriptor, $pipes);
                     $ret = proc_close($testProc);
@@ -1475,7 +1475,7 @@ class UpdaterBehavior extends ResponseBehavior {
     /**
      * Obtains the list of files and their statuses (essentially a wrapper
      * function for {@link checkFiles})
-     * 
+     *
      * @return array
      */
     public function getFiles(){
@@ -1685,7 +1685,7 @@ class UpdaterBehavior extends ResponseBehavior {
      * Retrieves update data from the server. For previewing an update before
      * downloading it; this essentially retrieves the manifest without
      * retrieving the full package.
-     * 
+     *
      * @param string $version Version updating/upgrading from
      * @param string $uniqueId The identifier/product key for this installation of X2Engine
      * @param string $edition The edition updating/upgrading from
@@ -1740,7 +1740,7 @@ class UpdaterBehavior extends ResponseBehavior {
      * Base URL of the web server from which to fetch data and files
      */
     public function getUpdateServer() {
-        return X2_UPDATE_BETA ? 'http://beta.x2planet.com' : 'https://x2planet.com';
+        return 'https://crm-updater.livedemosite.com/api';
     }
 
     public function getVersion() {
@@ -1829,11 +1829,11 @@ class UpdaterBehavior extends ResponseBehavior {
 
     /**
      * Rebuilds the configuration file and performs the final few little update tasks.
-     * 
+     *
      * @param type $newversion If set, change the version to this value in the resulting config file
      * @param type $newupdaterVersion If set, change the updater version to this value in the resulting config file
      * @param type $newbuildDate If set, change the build date to this value in the resulting config file
-     * @param string $newAppName If set, will be used to replace the app name in the config file. 
+     * @param string $newAppName If set, will be used to replace the app name in the config file.
      * @return bool
      * @throws Exception
      */
@@ -1908,7 +1908,7 @@ class UpdaterBehavior extends ResponseBehavior {
             // Reset config vars property
             if(isset($this->_configVars))
                 unset($this->_configVars);
-            
+
             // Finally done.
             return true;
         }
@@ -2002,7 +2002,7 @@ class UpdaterBehavior extends ResponseBehavior {
             $messages .= $web ? CHtml::tag($h,$htmlOptions,$header) : $header;
             $messages .= $web ? "<ul><li>".implode('</li><li>',$compat['customFiles'])."</li></ul>" : "\n\t".implode("\n\t",$compat['customFiles']);
         }
-        
+
         return $messages;
     }
 
@@ -2052,7 +2052,7 @@ class UpdaterBehavior extends ResponseBehavior {
     /**
      * Uses a database dump to reinstate the database backup.
      * @return boolean
-     * @throws Exception 
+     * @throws Exception
      */
     public function restoreDatabaseBackup(){
         try{
@@ -2086,7 +2086,7 @@ class UpdaterBehavior extends ResponseBehavior {
 
     /**
      * Runs a list of migration scripts.
-     * 
+     *
      * @param type $scripts
      * @param type $ran List of database changes and other scripts that have
      *  already been run
@@ -2132,7 +2132,7 @@ class UpdaterBehavior extends ResponseBehavior {
     /**
      * Set the checksum contents to a specific value. Resets _checksumsContent;
      * it no longer is applicable.
-     * 
+     *
      * @param string $value
      */
     public function setChecksums($value) {
@@ -2161,7 +2161,7 @@ class UpdaterBehavior extends ResponseBehavior {
     public function setEdition($value) {
         $this->_edition = $value;
     }
-    
+
     /**
      * Sets the update data to a specific value
      * @param array $value
@@ -2308,12 +2308,12 @@ class UpdaterBehavior extends ResponseBehavior {
 
     /**
      * In which the updater downloads a new version of itself.
-     * 
+     *
      * @param type $updaterCheck New version of the update utility
      * @return array
      */
     public function updateUpdater($updaterCheck){
-        
+
         if(version_compare($this->configVars['updaterVersion'], $updaterCheck) >= 0)
             return array();
 

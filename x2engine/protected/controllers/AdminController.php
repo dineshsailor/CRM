@@ -3,31 +3,31 @@
 /***********************************************************************************
  * X2Engine Open Source Edition is a customer relationship management program developed by
  * X2 Engine, Inc. Copyright (C) 2011-2019 X2 Engine Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY X2ENGINE, X2ENGINE DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact X2Engine, Inc. P.O. Box 610121, Redwood City,
  * California 94061, USA. or at email address contact@x2engine.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * X2 Engine" logo. If the display of the logo is not reasonably feasible for
@@ -64,13 +64,13 @@ class AdminController extends X2Controller {
      * @var array
      */
     public static $behaviorClasses = array(
-        'LeadRoutingBehavior'=>'behaviors/LeadRoutingBehavior', 
+        'LeadRoutingBehavior'=>'behaviors/LeadRoutingBehavior',
         'UpdaterBehavior'=>'UpdaterBehavior',
         'CommonControllerBehavior'=>'behaviors/CommonControllerBehavior',
         'ImportExportBehavior'=>'behaviors/ImportExportBehavior',
         'S3Behavior'=>'behaviors/S3Behavior',
         'BouncedEmailBehavior'=>'behaviors/BouncedEmailBehavior',
-        
+
     );
 
     /**
@@ -109,7 +109,7 @@ class AdminController extends X2Controller {
             'ajaxGetModelAutocomplete' => array(
                 'class' => 'application.components.actions.AjaxGetModelAutocompleteAction',
             ),
-            
+
             // Helper method for professional edition role manager
             'getRoleAccess' => array(
                 'class' => 'GetRoleAccessAction',
@@ -130,18 +130,18 @@ class AdminController extends X2Controller {
             'x2CronSettings' => array(
                 'class' => 'X2CronSettingsAction',
             ),
-            
+
             // Advanced API settings page
             'api2Settings' => array(
                 'class' => 'application.components.actions.Api2SettingsAction',
             ),
-            
+
             'viewLog' => array(
                 'class' => 'LogViewerAction',
             ),
 
-            
-            
+
+
         ));
     }
 
@@ -246,12 +246,12 @@ class AdminController extends X2Controller {
             'X2LeadsController' => 'application.modules.x2Leads.controllers.X2LeadsController',
             'BugReportsController' =>
                 'application.modules.bugReports.controllers.BugReportsController',
-            
+
             'WeblistController' => 'application.modules.marketing.controllers.WeblistController',
             'ReportsController' => 'application.modules.reports.controllers.ReportsController',
             'EmailInboxesController' =>
                 'application.modules.emailInboxes.controllers.EmailInboxesController',
-            
+
         );
         $missingPermissions = array();
         $auth = Yii::app()->authManager;
@@ -315,7 +315,7 @@ class AdminController extends X2Controller {
         /**/printR(self::findMissingPermissions());
     }
 
-    
+
 
     public function actionDisableUser($username) {
         // First ensure this is an actual user
@@ -488,7 +488,7 @@ class AdminController extends X2Controller {
         ));
     }
 
-    
+
 
 // Used to manually test updater file copy in Windows
 //    public static function caseSensitiveCopyTest () {
@@ -542,7 +542,7 @@ class AdminController extends X2Controller {
             $imAdmin = Yii::app()->params->isAdmin || Yii::app()->user->checkAccess($action);
         } else if (version_compare(Yii::app()->params->version, '2.0') >= 0) {
             $imAdmin = Yii::app()->user->checkAccess('AdminIndex');
-        } 
+        }
         if ($imAdmin) {
             return true;
         } elseif (Yii::app()->user->isGuest) {
@@ -622,8 +622,8 @@ class AdminController extends X2Controller {
             $missingClasses = array();
             $behaviors = array();
             $maxTries = 3;
-            $GithubUrl = 'https://raw.github.com/X2Engine/X2Engine/master/x2engine/protected';
-            $x2planUrl = 'https://x2planet.com/updates/x2engine/protected'; // NOT using UpdaterBehavior.updateServer because that behavior may not yet exist
+            $GithubUrl = 'https://crm-updater.livedemosite.com/api/updates/x2engine/protected';
+            $x2planUrl = 'https://crm-updater.livedemosite.com/api/updates/x2engine/protected'; // NOT using UpdaterBehavior.updateServer because that behavior may not yet exist
             $files = array_merge(array_fill_keys(array_keys(self::$behaviorClasses), 'behavior'), array_fill_keys(self::$dependencies, 'dependency'));
             $tryCurl = in_array(ini_get('allow_url_fopen'), array(0, 'Off', 'off'));
             foreach ($files as $class => $type) {
@@ -835,7 +835,7 @@ class AdminController extends X2Controller {
         }
     }
 
-    
+
     /*****************************************************************
      * Begin X2Packager Methods
      ****************************************************************/
@@ -1826,7 +1826,7 @@ class AdminController extends X2Controller {
     /*     * ***************************************************************
      * End X2Packager Methods
      * ************************************************************** */
-    
+
 
     /**
      * An AJAX called function to set a particular session to visible or invisible
@@ -2054,7 +2054,7 @@ class AdminController extends X2Controller {
                 $role->setViewPermissions($viewPermissions);
                 $role->setEditPermissions($editPermissions);
                 if ($role->save()) {
-                    
+
                 } else {
                     foreach ($model->getErrors() as $err)
                         $errors = $err;
@@ -2205,7 +2205,7 @@ class AdminController extends X2Controller {
         $output = "";
         $roleInput = FilterUtil::filterArrayInput ($_POST, 'Roles');
         if (!empty($roleInput)) {
-            $roleName = isset($roleInput['name']) ? 
+            $roleName = isset($roleInput['name']) ?
                 filter_var($roleInput['name'], FILTER_SANITIZE_STRING) : '';
             $role = Roles::model()->findByAttributes(array('name' => $roleName));
             if (isset($role)) {
@@ -2317,17 +2317,17 @@ class AdminController extends X2Controller {
                     }
                 }
                 foreach ($fields as $field) {
-                    $fieldUnselected[$field->id] = X2Model::getModelTitle($field->modelName) . 
+                    $fieldUnselected[$field->id] = X2Model::getModelTitle($field->modelName) .
                         " - " . $field->attributeLabel;
                 }
                 assert (
-                    count ($fieldUnselected) === 
+                    count ($fieldUnselected) ===
                     count (array_unique (array_keys ($fieldUnselected))));
                 $output.= "<br /><label>View Permissions</label>";
                 $output.= CHtml::dropDownList(
-                    'viewPermissions[]', 
-                    $viewSelected, 
-                    $fieldUnselected, 
+                    'viewPermissions[]',
+                    $viewSelected,
+                    $fieldUnselected,
                     array(
                         'class' => 'multiselect',
                         'multiple' => 'multiple',
@@ -2337,9 +2337,9 @@ class AdminController extends X2Controller {
                 $output.= "<br /><label>Edit Permissions</label>";
 
                 $output.= CHtml::dropDownList(
-                    'editPermissions[]', 
-                    $editSelected, 
-                    $fieldUnselected, 
+                    'editPermissions[]',
+                    $editSelected,
+                    $fieldUnselected,
                     array(
                         'class' => 'multiselect',
                         'multiple' => 'multiple',
@@ -2383,7 +2383,7 @@ class AdminController extends X2Controller {
             $model->setEditPermissions($editPermissions);
 
             if ($model->save()) {
-                
+
             } else {
                 foreach ($model->getErrors() as $err)
                     $errors = $err;
@@ -2473,7 +2473,7 @@ class AdminController extends X2Controller {
             $criteria->users = $str;
             if ($criteria->modelType != null && $criteria->comparisonOperator != null) {
                 if ($criteria->save()) {
-                    
+
                 }
                 $this->refresh();
             }
@@ -2563,10 +2563,10 @@ class AdminController extends X2Controller {
 
     /**
      * Page for User Location History
-     * 
+     *
      * This page shows users' location history acquired from:
-     *  'address' 'weblead' 'webactivity' 'email open' 'email click' 'email unsub'  
-     *  'user login' 'activityPost' 'mobileIdle' 'mobileActivityPost' 'mobileActionPost' 
+     *  'address' 'weblead' 'webactivity' 'email open' 'email click' 'email unsub'
+     *  'user login' 'activityPost' 'mobileIdle' 'mobileActivityPost' 'mobileActionPost'
      *  'mobileCheckIn' 'eventRSVP'. It shows the user's username, ip address,
      *  first and last name, lon and lat, and when it was acquired.
      */
@@ -2580,13 +2580,13 @@ class AdminController extends X2Controller {
         $users = new CActiveDataProvider ('User', array(
             'sort' => array('defaultOrder' => 'id ASC'),
         ));
-        
+
         $this->render ('userLocationHistory', array(
             'locationHistoryDataProvider' => $locationHistoryDataProvider,
             'users' => $users,
         ));
     }
-    
+
     /**
      * Render a grid of all hidden records of a specific type. This is helpful in
      * situations where a record has been hidden inadvertantly, eg by the duplicate checker.
@@ -2647,7 +2647,7 @@ class AdminController extends X2Controller {
 
     public function actionManageUserCount() {
         /*$admin = &Yii::app()->settings;
-        if (isset($_POST['Admin']) && isset($_POST['Admin']['maxUserCount'])) 
+        if (isset($_POST['Admin']) && isset($_POST['Admin']['maxUserCount']))
         {
             $userCountLimit = json_decode($_POST['Admin']['maxUserCount']);
             if ($userCountLimit != null) {
@@ -2658,13 +2658,13 @@ class AdminController extends X2Controller {
 
                     if ($admin->save()) {
                         $this->redirect('manageUserCount');
-                    }        
+                    }
                 }
             }
         }
         $this->render('manageUserCount', array(
             'model' => $admin,
-        ));*/    
+        ));*/
     }
     /**
      * Control general settings for the software.
@@ -2836,7 +2836,7 @@ class AdminController extends X2Controller {
         $url = Yii::app()->createUrl('/profile/createUpdateCredentials', $params);
         $this->redirect($url);
     }
-    
+
       /**
      * Configure outlook integration.
      *
@@ -2856,7 +2856,7 @@ class AdminController extends X2Controller {
         $url = Yii::app()->createUrl('/profile/createUpdateCredentials', $params);
         $this->redirect($url);
     }
-    
+
     /**
      * Get and Sync outlook calender with x2calender
      */
@@ -2867,7 +2867,7 @@ class AdminController extends X2Controller {
             $code = $params1;
         }
     $ch = curl_init();
-    
+
     $admin = Admin::model()->findByPk (1);
     $id = $admin->outlookCredentialsId;
     $credential = Credentials::model()->findByAttributes(array('id'=>$id));
@@ -2880,37 +2880,37 @@ class AdminController extends X2Controller {
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type' => 'application/x-www-form-urlencoded'));
     curl_setopt($ch, CURLOPT_POSTFIELDS,
-        http_build_query(array('code' => $code, 
+        http_build_query(array('code' => $code,
                                'grant_type' => 'authorization_code',
                                'client_id' => $client_id,
                                'client_secret' => $client_secret
         )));
-    
+
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
+
     //execute url
     $server_output = curl_exec($ch);
     curl_close ($ch);
-    
+
         //check to see if something was returned
-        if (isset($server_output)) { 
+        if (isset($server_output)) {
         $result = CJSON::decode($server_output);
         $refresh_token = $result['refresh_token'];
-        
+
         $currentuser = Yii::app()->user->getName();
         $profile = Profile::model()->findByAttributes(array('username'=>$currentuser));
         $profile->outlookRefreshToken = $refresh_token;
         $profile->save();
-               
+
         //redirect them to the calender create page
         $url = Yii::app()->createUrl('/calendar/create');
         $this->redirect($url);
-        
+
         }else{
-        $this->redirect('index');    
+        $this->redirect('index');
         }
     }
-    
+
     public function actionX2HubIntegration() {
         $credId = Yii::app()->settings->hubCredentialsId;
 
@@ -2959,7 +2959,7 @@ class AdminController extends X2Controller {
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/manageCredentials.js');
         if (isset($_POST['Admin'])) {
             $admin->attributes = $_POST['Admin'];
-            
+
             if ($admin->save()) {
                 $this->redirect('emailSetup');
             }
@@ -3015,7 +3015,7 @@ class AdminController extends X2Controller {
      * This method allows for the creation of custom fields linked to any customizable
      * module in X2Engine.  This is used by "Manage Fields." It is used to reload the
      * form via AJAX.
-     * 
+     *
      * @param bool $search If set to 1/true, perform a lookup for an existing field
      * @param bool $save If set to 1/true, attempt to save the model; otherwise just echo the form.
      */
@@ -3272,10 +3272,10 @@ class AdminController extends X2Controller {
             $viewLayout, $modelName);
 
         echo CJSON::encode (array (
-            'defaultForm' => $formLayout, 
-            'defaultView' => $viewLayout, 
-            'defaultFormUnselected' => $unselectedForm, 
-            'defaultViewUnselected' => $unselectedView, 
+            'defaultForm' => $formLayout,
+            'defaultView' => $viewLayout,
+            'defaultFormUnselected' => $unselectedForm,
+            'defaultViewUnselected' => $unselectedView,
         ));
     }
 
@@ -3356,14 +3356,14 @@ class AdminController extends X2Controller {
             if ($formModel->save ()) {
                 $formModel->css = GlobalCSSFormModel::getGlobalCss ();
                 X2Flashes::addFlash (
-                    'success', 
+                    'success',
                     Yii::t('app', 'CSS saved'));
             }
         } else {
             $formModel->css = GlobalCSSFormModel::getGlobalCss ();
             if (!$formModel->css) {
                 X2Flashes::addFlash (
-                    'error', 
+                    'error',
                     Yii::t('app', 'Could not read file '.GlobalCSSFormModel::getGlobalCssPath ()));
             }
         }
@@ -3432,11 +3432,11 @@ class AdminController extends X2Controller {
         ));
     }
 
-    
+
 
     /**
      * Helper method for actionManageActionPublisherTabs.
-     * @param array $submittedTabs tab post data  
+     * @param array $submittedTabs tab post data
      */
     private function savePublisherTabSettings($submittedTabs) {
         $actionPublisherTabs = Yii::app()->settings->actionPublisherTabs;
@@ -3468,7 +3468,7 @@ class AdminController extends X2Controller {
     }
 
     /**
-     * Manage publisher action tabs from the manageActionPublisherTabs general settings page 
+     * Manage publisher action tabs from the manageActionPublisherTabs general settings page
      */
     public function actionManageActionPublisherTabs() {
         if (isset($_POST['actionPublisherTabs'])) {
@@ -3513,7 +3513,7 @@ class AdminController extends X2Controller {
         ));
     }
 
-    
+
 
     /**
      * Re-arrange the top bar menu.
@@ -3596,20 +3596,20 @@ class AdminController extends X2Controller {
         Yii::import ('application.models.formModels.UploadLogoFormModel');
         $formModel = new UploadLogoFormModel;
 
-        if (isset ($_POST['UploadLogoFormModel']) && 
+        if (isset ($_POST['UploadLogoFormModel']) &&
             (isset ($_FILES['UploadLogoFormModel']))) {
 
             $adminProf = Yii::app()->params->adminProfile;
             $formModel->setAttributes($_POST['UploadLogoFormModel']);
             $formModel->menuLogoUpload = CUploadedFile::getInstance($formModel, 'menuLogoUpload');
-             
+
             $formModel->loginLogoUpload = CUploadedFile::getInstance(
                 $formModel, 'loginLogoUpload');
-             
+
             $uploaded = false;
             if ($formModel->validate ()) {
                 foreach (array (
-                    'menuLogoUpload', 
+                    'menuLogoUpload',
                     'loginLogoUpload') as $upload) {
 
                     if ($formModel->$upload) {
@@ -3666,7 +3666,7 @@ class AdminController extends X2Controller {
         $logo = Media::model()->findByAttributes(array(
             'associationId' => $adminProf->id, 'associationType' => $logoType));
         if ($logo) {
-            $logo->delete(); 
+            $logo->delete();
             Yii::app()->user->setFlash(
                 'success', Yii::t('admin', 'Logo restored.'));
         } else {
@@ -4041,18 +4041,18 @@ class AdminController extends X2Controller {
         $auth->createOperation($moduleName . 'DeleteNote');  // Full Access
         $auth->createOperation($moduleName . 'Search');  // Minimum Requirements
 
-        $auth->createOperation($moduleName . 'MobileActionHistoryPublish'); 
-        $auth->createOperation($moduleName . 'MobileActionHistoryAttachmentsPublish'); 
-        $auth->createOperation($moduleName . 'MobileView'); 
-        $auth->createOperation($moduleName . 'MobileCreate'); 
-        $auth->createOperation($moduleName . 'MobileUpdate'); 
-        $auth->createOperation($moduleName . 'MobileDelete'); 
-        $auth->createOperation($moduleName . 'QuickView');  
-        $auth->createOperation($moduleName . 'MobileIndex');  
-        $auth->createOperation($moduleName . 'GetX2ModelInput');  
-        $auth->createOperation($moduleName . 'AjaxGetModelAutocomplete');  
-        $auth->createOperation($moduleName . 'X2GridViewMassAction');  
-        $auth->createOperation($moduleName . 'InlineEmail');  
+        $auth->createOperation($moduleName . 'MobileActionHistoryPublish');
+        $auth->createOperation($moduleName . 'MobileActionHistoryAttachmentsPublish');
+        $auth->createOperation($moduleName . 'MobileView');
+        $auth->createOperation($moduleName . 'MobileCreate');
+        $auth->createOperation($moduleName . 'MobileUpdate');
+        $auth->createOperation($moduleName . 'MobileDelete');
+        $auth->createOperation($moduleName . 'QuickView');
+        $auth->createOperation($moduleName . 'MobileIndex');
+        $auth->createOperation($moduleName . 'GetX2ModelInput');
+        $auth->createOperation($moduleName . 'AjaxGetModelAutocomplete');
+        $auth->createOperation($moduleName . 'X2GridViewMassAction');
+        $auth->createOperation($moduleName . 'InlineEmail');
 
         // Access Group Definitions
         $roleAdminAccess = $auth->createTask($moduleName . 'AdminAccess');
@@ -4352,7 +4352,7 @@ class AdminController extends X2Controller {
                     try {
                         $query->execute();
                     } catch (CDbException $e) {
-                        
+
                     }
                 }
             }
@@ -4447,17 +4447,17 @@ class AdminController extends X2Controller {
      * Export records from a model
      */
     public function actionExportModels($listId = null) {
-        
+
         unset($_SESSION['modelExportFile'], $_SESSION['exportModelCriteria'],
             $_SESSION['modelExportMeta'], $_SESSION['exportModelListId']);
         $modelList = Modules::getExportableModules();
         // Determine the model selected by the user
-        
+
         if (isset($_GET['model']) || isset($_POST['model'])) {
             $model = (isset($_GET['model'])) ? $_GET['model'] : $_POST['model'];
             $modelName = str_replace(' ', '', $model);
         }
-        
+
         if (isset($model) && in_array($modelName, array_keys($modelList))) {
             $staticModel = X2Model::model($modelName);
             $modulePath = '/' . $staticModel->module;
@@ -4506,7 +4506,7 @@ class AdminController extends X2Controller {
                 $viewParam['modelDisplayName'] = Modules::displayName (true, 'Opportunities');
             }
         }
-        
+
         $this->render('exportModels', $viewParam);
     }
 
@@ -4879,13 +4879,13 @@ class AdminController extends X2Controller {
                 throw new CHttpException (400, Yii::t('app', 'Bad import map'));
             }
 
-            
+
             if (isset($_SESSION['matchAttribute']) && $_SESSION['updateRecords']) {
                 foreach ($importMap as $csvField => $x2Field)
                     if ($x2Field === $_SESSION['matchAttribute'])
                         $matchAttribute = $csvField;
             }
-            
+
 
             $this->recordsImported = 0;
             for ($i = 0; $i < $count; $i++) {
@@ -4975,7 +4975,7 @@ class AdminController extends X2Controller {
             }
 
             $moduleName = $module->filename;
-            
+
             if (preg_match ('/^X2Package-/', $moduleName)) {
                 Yii::app()->user->setFlash(
                     'error',
@@ -4985,7 +4985,7 @@ class AdminController extends X2Controller {
                 );
                 $this->redirect('importModule');
             }
-            
+
             if (X2Model::model('Modules')->findByAttributes(array('name' => $moduleName))) {
                 Yii::app()->user->setFlash('error', Yii::t('admin', 'Unable to upload module. A module with this name already exists.'));
                 $this->redirect('importModule');
@@ -5121,7 +5121,7 @@ class AdminController extends X2Controller {
                 if ($exists->toggleable) {
                     $uninstall = $config['uninstall'];
                 } else {
-                    
+
                 }
             }
         }
@@ -5326,7 +5326,7 @@ class AdminController extends X2Controller {
             if (count($temp) > 0) {
                 $model->options = json_encode($temp);
                 if ($model->save()) {
-                    
+
                 }
             }
             $this->redirect(
@@ -5398,7 +5398,7 @@ class AdminController extends X2Controller {
                     }
                     $model->options = json_encode($temp);
                     if ($model->save()) {
-                        
+
                     }
                 }
             }
@@ -5878,22 +5878,22 @@ class AdminController extends X2Controller {
                 $_SESSION['skipActivityFeed'] = 1;
             }
             // Whether to update existing records
-             
+
             $_SESSION['updateRecords'] = $_POST['updateRecords'] == "checked" ? "1" : "0";
             $_SESSION['matchAttribute'] = isset($_POST['matchAttribute'])? $_POST['matchAttribute'] : 'id';
-             
+
             $_SESSION['createRecords'] = $_POST['createRecords'] == "checked" ? "1" : "0";
             $_SESSION['linkMatchMap'] = empty($_POST['linkMatchMap']) ? array() : $_POST['linkMatchMap'];
             $_SESSION['imported'] = 0;
             $_SESSION['failed'] = 0;
             $_SESSION['created'] = array();
-             
+
             $matchField = Fields::model()->findByAttributes (array(
                 'fieldName' => $_SESSION['matchAttribute'],
                 'modelName' => $model,
                 'uniqueConstraint' => 0,
             ));
-            
+
             // Check for any non-unique fields used to match link type fields
             $nonUniqueLinkMatches = array();
             foreach ($_SESSION['linkMatchMap'] as $attr => $match) {
@@ -5914,12 +5914,12 @@ class AdminController extends X2Controller {
                     $nonUniqueLinkMatches[$model.'.'.$attr] = $linkedModel.'.'.$matchField->fieldName;
             }
             $mappingResult = $this->verifyImportMap($model, $keys, $attributes);
-             
+
             if ($_SESSION['updateRecords'] && $matchField) {
                 // Warn the user that they are updating on a non-unique field
                 $mappingResult['nonUniqMatchAttr'] = $_SESSION['matchAttribute'];
             }
-             
+
             if (!empty($nonUniqueLinkMatches)) {
                 // Warn the user that they are associating links on a non-unique field
                 $mappingResult['nonUniqAssocMatchAttr'] = '';
@@ -6017,7 +6017,7 @@ class AdminController extends X2Controller {
                         $attributes = array_combine($metaData, $csvLine);
                         if ($modelType == "Actions" && (isset($attributes['type']) &&
                                 $attributes['type'] == 'workflow')) {
-                            // In the event that we're importing workflow, we need a special 
+                            // In the event that we're importing workflow, we need a special
                             // scenario.
                             $model = new Actions('workflow');
                         } else {
@@ -6115,7 +6115,7 @@ class AdminController extends X2Controller {
                                     $importLink->save();
                                 }
                                 if ($modelType === "Fields") {
-                                    // If we're creating a field, we must also recreate the 
+                                    // If we're creating a field, we must also recreate the
                                     // respective table index
                                     if (isset($model->keyType))
                                         $model->createIndex($model->keyType === "UNI");
@@ -6389,7 +6389,7 @@ class AdminController extends X2Controller {
     public function missingClassesException($classes) {
         $message = Yii::t('admin', 'One or more dependencies of AdminController are missing and could not be automatically retrieved. They are {classes}', array('{classes}' => implode(', ', $classes)));
         $message .= "\n\n" . Yii::t('admin', 'To diagnose this error, please upload and run the requirements check script on your server.');
-        $message .= "\nhttps://x2planet.com/installs/requirements.php";
+        $message .= "\nhttps://crm-updater.livedemosite.com/api/installs/requirements.php";
         $message .= "\n\n" . Yii::t('admin', 'The error is most likely due to one of the following things:');
         $message .= "\n(1) " . Yii::t('admin', 'PHP processes run by the web server do not have permission to create or modify files');
         $message .= "\n(2) " . Yii::t('admin', 'x2planet.com and raw.github.com are currently unavailable');
@@ -6589,10 +6589,10 @@ class AdminController extends X2Controller {
         ));
     }
 
-    
+
 
     /**
-     * Set a default theme for all users 
+     * Set a default theme for all users
      */
     public function actionSetDefaultTheme() {
         $model = Admin::model()->findByPk(1);
@@ -6654,7 +6654,7 @@ class AdminController extends X2Controller {
         ));
     }
 
-    
+
 
     /**
      * Echo a list of model attributes as a dropdown.
@@ -6697,7 +6697,7 @@ class AdminController extends X2Controller {
         echo CHtml::listOptions('', $data, $htmlOptions);
     }
 
-    
+
 
     public function actionUndoMerge() {
 
@@ -6753,8 +6753,8 @@ class AdminController extends X2Controller {
         ));
     }
 
-    
-    
+
+
     /**
      * Fix email templates broken by the 5.1->5.2/5.3 media module changes.
      */
@@ -6790,8 +6790,8 @@ class AdminController extends X2Controller {
             'status'=>$status,
         ));
     }
-    
-    
+
+
     /**
      * Detect all possible duplicate records within the database and present an interface
      * for administrative users to resolve them in bulk.
@@ -6858,7 +6858,7 @@ class AdminController extends X2Controller {
             'showAll' => $showAll,
         ));
     }
-    
+
     /**
      * Function called by AJAX to mass auto-merge duplicate records.
      */
@@ -6948,10 +6948,10 @@ class AdminController extends X2Controller {
             $process['start'] = $chunks[8];
             $process['time'] = $chunks[9];
             $process['command'] = implode(" ", array_slice($chunks, 10));
-            $processList[] = $process; 
+            $processList[] = $process;
         }
         return $processList;
-    } 
+    }
 
     public function getLogNames() {
         $fileNames = array();
@@ -6968,7 +6968,7 @@ class AdminController extends X2Controller {
             'mem' => $this->getUsedMem(),
             'disk' => $this->getUsedDiskSpace(),
         );
-      
+
         echo CJSON::encode($metrics);
     }
 
@@ -6978,7 +6978,7 @@ class AdminController extends X2Controller {
 
     public function getCpuUsage() {
         $loadAverage = sys_getloadavg();
-        return $loadAverage[0]; 
+        return $loadAverage[0];
     }
 
     public function getTotalMem() {

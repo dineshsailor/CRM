@@ -2,31 +2,31 @@
 /***********************************************************************************
  * X2Engine Open Source Edition is a customer relationship management program developed by
  * X2 Engine, Inc. Copyright (C) 2011-2019 X2 Engine Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY X2ENGINE, X2ENGINE DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact X2Engine, Inc. P.O. Box 610121, Redwood City,
  * California 94061, USA. or at email address contact@x2engine.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * X2 Engine" logo. If the display of the logo is not reasonably feasible for
@@ -85,7 +85,7 @@ class ApplicationConfigBehavior extends CBehavior {
 
     /**
      * Software edition detection based on logo presence.
-     * @var type 
+     * @var type
      */
     private static $_logoHashes = array(
         'pro'=> '0e666bd65d6204fa76ea1aec2a0f3217',
@@ -105,7 +105,7 @@ class ApplicationConfigBehavior extends CBehavior {
      */
     private $_cryptInit = false;
     private $_settings;
-    
+
     /**
      * If the application is locked, this will be an integer corresponding to
      * the date that the application was locked. Otherwise, it will be false.
@@ -148,13 +148,13 @@ class ApplicationConfigBehavior extends CBehavior {
     }
 
     public function getUpdateServer() {
-        return X2_UPDATE_BETA ? 'http://beta.x2planet.com' : 'https://x2planet.com';
+        return 'https://crm-updater.livedemosite.com/api';
     }
 
     /**
-     * Returns a JS string which declares two global JS dictionaries if they haven't already been 
+     * Returns a JS string which declares two global JS dictionaries if they haven't already been
      * declared. Additional properties of the yii global are declared if the user has a profile.
-     * The globals would already have been decalared in the case that this is an AJAX request in 
+     * The globals would already have been decalared in the case that this is an AJAX request in
      * which registered scripts are being sent back in response to the client.
      *
      * @param object if set, additional profile specific properties are declared
@@ -258,9 +258,9 @@ class ApplicationConfigBehavior extends CBehavior {
                 Yii::import('application.components.sortableWidget.*');
                 Yii::import('application.components.sortableWidget.profileWidgets.*');
                 Yii::import('application.components.sortableWidget.recordViewWidgets.*');
-                 
+
                 Yii::import('application.components.sortableWidget.dataWidgets.*');
-                 
+
                 Yii::import('application.components.X2Settings.*');
                 Yii::import('application.components.X2MessageSource');
                 Yii::import('application.components.X2Html');
@@ -306,7 +306,7 @@ class ApplicationConfigBehavior extends CBehavior {
                 Yii::import('application.models.Dropdowns');
                 Yii::import('application.models.Admin');
                 $this->cryptInit();
-                
+
                 // Yii::import('application.models.*');
                 // foreach(scandir('protected/modules') as $module){
                 // if(file_exists('protected/modules/'.$module.'/register.php'))
@@ -325,11 +325,11 @@ class ApplicationConfigBehavior extends CBehavior {
         }
 
         $this->importDirectories();
-        
+
         $this->cryptInit();
 
         if (YII_DEBUG) $this->owner->params->timer = new TimerUtil;
-        
+
         $this->owner->messages->onMissingTranslation = array(new TranslationLogger, 'log');
 
         // Set profile
@@ -372,8 +372,8 @@ class ApplicationConfigBehavior extends CBehavior {
                     ? $userModel
                     : User::model()->findByPk(1));
         }
-        
-        
+
+
         // Set session variables
         if(!$noSession){
             $sessionId = isset($_SESSION['sessionId']) ? $_SESSION['sessionId'] : session_id();
@@ -472,7 +472,7 @@ class ApplicationConfigBehavior extends CBehavior {
                     $yiiString = $this->getJSGlobalsSetupScript ();
                 }
                 if(!$this->owner->request->isAjaxRequest) {
-                    
+
 Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)), base64_decode(
     'dmFyIF8weDZjNzM9WyJceDc1XHg2RVx4NjRceDY1XHg2Nlx4NjlceDZFXHg2NVx4NjQiLCJceDZDXHg2R'
     .'lx4NjFceDY0IiwiXHgyM1x4NzBceDZGXHg3N1x4NjVceDcyXHg2NVx4NjRceDJEXHg2Mlx4NzlceDJEX'
@@ -531,7 +531,7 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
     /**
      * Returns true or false for whether or not the application's current edition
      * contains a given edition.
-     * 
+     *
      * @param string $edition The edition. With "opensource", this function will
      *  always evaluate to true.
      * @return boolean
@@ -584,11 +584,11 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
      * @param array $params Query parameters
      */
     public function createExternalUrl($route, $params = array()){
-        if(!ResponseUtil::isCli() && $this->owner->controller instanceof CController){ 
+        if(!ResponseUtil::isCli() && $this->owner->controller instanceof CController){
             // Standard in-web-request URL generation
 
             if ($route === '') {
-                $route = $this->owner->controller->getId() . '/' . 
+                $route = $this->owner->controller->getId() . '/' .
                     $this->owner->controller->getAction()->getId();
             } elseif (strpos($route, '/') === false) {
                 $route = $this->owner->controller->getId() . '/' . $route;
@@ -598,7 +598,7 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
             }
             $requestUrl = $this->owner->getUrlManager()->createUrlWithoutBase($route, $params);
             return rtrim($this->externalAbsoluteBaseUrl,'/') . $requestUrl;
-                
+
         }else{ // Offline URL generation
             return rtrim($this->externalAbsoluteBaseUrl,'/') .
                 (YII_UNIT_TESTING ? '/index-test.php/' : '/index.php/').
@@ -755,7 +755,7 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
         }
         return $this->_externalAbsoluteBaseUrl;
     }
-    
+
     public function getExternalWebRoot() {
         if (!isset($this->_externalWebRoot) || YII_UNIT_TESTING) {
             $eabu = $this->settings->externalBaseUri;
@@ -829,7 +829,7 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
             } elseif(!$app->params->hasProperty('noSession')){
                 $this->_isInSession = true;
             }else{
-                if(!isset(Yii::app()->user) || 
+                if(!isset(Yii::app()->user) ||
                     Yii::app()->user instanceof X2NonWebUser ||
                     Yii::app()->user->isGuest){
 
@@ -914,7 +914,7 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
             }
         }
     }
-    
+
     /**
      * Magic setter for substitute user model
      * @param User $user
@@ -934,7 +934,7 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
         $this->owner->params->roles = Roles::getUserRoles($userId);
         $this->owner->params->isAdmin = $userId !== null
                 ? $this->owner->authManager->checkAccess('AdminIndex', $userId)
-                : false; 
+                : false;
     }
 
     /**
@@ -955,9 +955,9 @@ Yii::app()->clientScript->registerScript(sprintf('%x', crc32(Yii::app()->name)),
         Yii::import('application.components.sortableWidget.*');
         Yii::import('application.components.sortableWidget.profileWidgets.*');
         Yii::import('application.components.sortableWidget.recordViewWidgets.*');
-         
+
         Yii::import('application.components.sortableWidget.dataWidgets.*');
-         
+
         Yii::import('application.components.filters.*');
         Yii::import('application.components.util.*');
         Yii::import('application.components.permissions.*');

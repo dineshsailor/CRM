@@ -2,31 +2,31 @@
 /***********************************************************************************
  * X2Engine Open Source Edition is a customer relationship management program developed by
  * X2 Engine, Inc. Copyright (C) 2011-2019 X2 Engine Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY X2ENGINE, X2ENGINE DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact X2Engine, Inc. P.O. Box 610121, Redwood City,
  * California 94061, USA. or at email address contact@x2engine.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * X2 Engine" logo. If the display of the logo is not reasonably feasible for
@@ -41,7 +41,7 @@ Yii::import('application.components.util.FileUtil');
 
 /**
  * Test case for {@link FileUtil}
- * 
+ *
  * @author Demitri Morgan <demitri@x2engine.com>
  * @package application.tests.unit.components.util
  */
@@ -51,7 +51,7 @@ class FileUtilTest extends FileOperTestCase {
 
     /**
      * Expected behavior: if an exclude pattern is specified, and a subdirectory contains
-     * an excluded file, that subdirectory will be preserved. 
+     * an excluded file, that subdirectory will be preserved.
      */
     public function testRrmDirWithPat(){
         $this->setupTestDirs();
@@ -220,7 +220,7 @@ class FileUtilTest extends FileOperTestCase {
 
     public function testCaseInsensitiveCopyFix () {
         $outdir = implode(
-            DIRECTORY_SEPARATOR, 
+            DIRECTORY_SEPARATOR,
             array(Yii::app()->basePath, 'tests', 'data', 'output', 'testCaseInsensitivityCopyFix')
         );
         $testFile = $outdir.DIRECTORY_SEPARATOR.'test.php';
@@ -306,7 +306,7 @@ class FileUtilTest extends FileOperTestCase {
 
     /**
      * Test copying the requirements checker script.
-     * 
+     *
      * NOTE: the requirements checker (which gets deleted) will need to be copied back first.
      */
     public function testRemoteCopy(){
@@ -316,10 +316,10 @@ class FileUtilTest extends FileOperTestCase {
         $file = 'index.php';
         $live = implode(DIRECTORY_SEPARATOR, array(Yii::app()->basePath, '..', $file));
         // Using "copy":
-        FileUtil::ccopy("http://x2planet.com/updates/x2engine/$file", $copy);
+        FileUtil::ccopy("https://crm-updater.livedemosite.com/api/updates/x2engine/$file", $copy);
         // Using cURL:
         FileUtil::$alwaysCurl = true;
-        FileUtil::ccopy("http://x2planet.com/updates/x2engine/$file", $curl);
+        FileUtil::ccopy("https://crm-updater.livedemosite.com/api/updates/x2engine/$file", $curl);
         FileUtil::$alwaysCurl = false;
         // Test that the files are identical:
         $this->assertFileEquals($copy, $curl);
@@ -343,7 +343,7 @@ class FileUtilTest extends FileOperTestCase {
         $file = implode(DIRECTORY_SEPARATOR,array(Yii::app()->basePath,'..','framework','YiiBase.php'));
         $relpath = FileUtil::relpath($file, $startPoint);
         $this->assertEquals(str_replace('/',DIRECTORY_SEPARATOR,'../../framework/YiiBase.php'), $relpath);
-        
+
         // Specifying only one path. The return value should originate from
         // index.php's directory!
         $relpath = FileUtil::relpath($file);
